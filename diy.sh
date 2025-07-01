@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # 移除 SNAPSHOT
 sed -i 's,-SNAPSHOT,,g' include/version.mk
 sed -i 's,-SNAPSHOT,,g' package/base-files/image-config.in
