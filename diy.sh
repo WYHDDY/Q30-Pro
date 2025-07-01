@@ -13,20 +13,12 @@ sed -i -e 's/192.168.6.1/10.0.0.251/g' -e 's/ImmortalWrt/EnWrt/g' package/base-f
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-light/Makefile
 # CPU 频率显示修正
 sed -i '25s/cpu_freq=".*"/cpu_freq="$(mhz | awk -F '\''cpu_MHz='\'' '\''{printf("%.fMHz",$2)}'\'')";/' package/emortal/autocore/files/generic/cpuinfo
-# 2.4
-WIRELESS_2="package/mtk/drivers/wifi-profile/files/mt7981/mt7981.dbdc.b0.dat"
-# 5
-WIRELESS_5="package/mtk/drivers/wifi-profile/files/mt7981/mt7981.dbdc.b1.dat"
-# 修改 2.4
-sed -i 's/^SSID1=.*$/SSID1=WYH-WIFI2.4/g' "$WIRELESS_2"
-sed -i 's/^WPAPSK1=.*$/WPAPSK1=zz123456/g' "$WIRELESS_2"
-sed -i 's/^AuthMode=.*$/AuthMode=WPA2PSKWPA3PSK/g' "$WIRELESS_2"
-sed -i 's/^EncrypType=.*$/EncrypType=AES/g' "$WIRELESS_2"
-# 修改 5
-sed -i 's/^SSID1=.*$/SSID1=WYH-WIFI/g' "$WIRELESS_5"
-sed -i 's/^WPAPSK1=.*$/WPAPSK1=zz123456/g' "$WIRELESS_5"
-sed -i 's/^AuthMode=.*$/AuthMode=WPA2PSKWPA3PSK/g' "$WIRELESS_5"
-sed -i 's/^EncrypType=.*$/EncrypType=AES/g' "$WIRELESS_5"
+# TEO
+KERNEL_VERSION="6.6"
+CONFIG_CONTENT='
+CONFIG_CPU_IDLE_GOV_MENU=n
+CONFIG_CPU_IDLE_GOV_TEO=y
+'
 # PATCH
 cp -rf "$GITHUB_WORKSPACE/PATCH/6.7_Boost_For_Single_TCP_Flow/"* ./target/linux/generic/backport-6.6/
 cp -rf "$GITHUB_WORKSPACE/PATCH/6.7_FQ_packet_scheduling/"* ./target/linux/generic/backport-6.6/
